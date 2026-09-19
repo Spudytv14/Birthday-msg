@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A Wish for Feluna Chimhapa</title>
+  <title>Celebrating Feluna Chimhapa</title>
 
+  <!-- Editorial Luxury Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -24,7 +25,7 @@
       --gold: #f5d487;
       --gold-light: #fff5d1;
       --rose: #ff7597;
-      --text-muted: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.72);
       --font-serif: "Cormorant Garamond", Georgia, serif;
       --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
     }
@@ -41,16 +42,16 @@
       justify-content: center;
     }
 
-    /* Ambient Space Atmosphere */
+    /* Ambient Atmosphere */
     .ambient-bg {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
       background:
-        radial-gradient(circle at 50% 20%, rgba(93, 44, 150, 0.28), transparent 45%),
-        radial-gradient(circle at 80% 80%, rgba(255, 117, 151, 0.15), transparent 40%),
-        radial-gradient(circle at 20% 85%, rgba(245, 212, 135, 0.1), transparent 35%);
+        radial-gradient(circle at 50% 25%, rgba(93, 44, 150, 0.3), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 117, 151, 0.16), transparent 45%),
+        radial-gradient(circle at 20% 85%, rgba(245, 212, 135, 0.12), transparent 40%);
     }
 
     .stars-layer {
@@ -73,7 +74,68 @@
       100% { opacity: 1; transform: scale(1.4); }
     }
 
-    /* Primary Interactive Stage */
+    /* Invisible YouTube Audio Player */
+    #youtube-player {
+      position: fixed;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: -10;
+    }
+
+    /* Top Corner Audio Pill */
+    .top-controls {
+      position: fixed;
+      top: 24px;
+      right: 28px;
+      z-index: 30;
+      display: none; /* revealed once music starts */
+      align-items: center;
+    }
+
+    .audio-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 100px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.85);
+      cursor: pointer;
+    }
+
+    .wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 2.5px;
+      height: 12px;
+    }
+
+    .wave-bar {
+      width: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      height: 4px;
+      animation: soundWave 0.8s ease-in-out infinite alternate;
+    }
+
+    .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+    .wave-bar:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes soundWave {
+      0% { height: 3px; }
+      100% { height: 13px; }
+    }
+
+    /* Primary Glass Frame */
     .stage-container {
       position: relative;
       z-index: 10;
@@ -86,16 +148,15 @@
     .glass-card {
       background: rgba(18, 14, 28, 0.65);
       border: 1px solid rgba(245, 212, 135, 0.22);
-      border-radius: 28px;
-      padding: 48px 40px;
+      border-radius: 30px;
+      padding: 52px 42px;
       text-align: center;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.65), 0 0 40px rgba(162, 102, 255, 0.1);
-      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65), 0 0 50px rgba(162, 102, 255, 0.12);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Subtitle & Headers */
     .eyebrow {
       font-size: 11px;
       letter-spacing: 4px;
@@ -107,10 +168,10 @@
 
     .title {
       font-family: var(--font-serif);
-      font-size: clamp(34px, 6vw, 48px);
+      font-size: clamp(34px, 5.5vw, 48px);
       font-weight: 500;
       line-height: 1.15;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       background: linear-gradient(135deg, #ffffff 40%, var(--gold-light) 70%, var(--gold));
       -webkit-background-clip: text;
       background-clip: text;
@@ -120,17 +181,56 @@
     .instruction {
       font-size: 15px;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.7;
       font-weight: 300;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+    }
+
+    /* ========================================================
+       STAGE 0: FRONT ENTRANCE SCREEN
+    ======================================================== */
+    .front-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s ease both;
+    }
+
+    .front-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 38px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f5d487, #e5b350);
+      border: none;
+      color: #150e24;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(245, 212, 135, 0.35);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .front-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 16px 40px rgba(245, 212, 135, 0.5);
     }
 
     /* ========================================================
        STAGE 1: CANDLE & COUNTDOWN
     ======================================================== */
+    .candle-stage {
+      display: none;
+      animation: fadeIn 0.8s ease both;
+    }
+
     .candle-scene {
       position: relative;
-      height: 160px;
+      height: 150px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -141,7 +241,7 @@
     .candle-body {
       position: relative;
       width: 14px;
-      height: 80px;
+      height: 78px;
       background: linear-gradient(180deg, #ffffff, #ffdbe7 60%, #e2769d 100%);
       border-radius: 6px;
       box-shadow: 0 0 20px rgba(255, 117, 151, 0.3);
@@ -159,25 +259,24 @@
 
     .flame {
       position: absolute;
-      top: -32px;
+      top: -30px;
       left: 50%;
       width: 18px;
-      height: 30px;
+      height: 28px;
       transform: translateX(-50%);
       background: radial-gradient(ellipse at center bottom, #ffffff 0%, #fff085 25%, #ff8000 65%, transparent 85%);
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      filter: drop-shadow(0 0 10px #ffe57a) drop-shadow(0 0 25px rgba(255, 120, 0, 0.8));
+      filter: drop-shadow(0 0 10px #ffe57a) drop-shadow(0 0 24px rgba(255, 120, 0, 0.8));
       animation: flicker 1.2s infinite ease-in-out alternate;
       transform-origin: bottom center;
       transition: all 0.4s ease-out;
     }
 
     @keyframes flicker {
-      0% { transform: translateX(-50%) scale(1) rotate(-1deg); }
+      0% { transform: translateX(-50%) scale(1) rotate(-1.5deg); }
       100% { transform: translateX(-50%) scale(1.08, 0.94) rotate(1.5deg); }
     }
 
-    /* Extinguished & Smoke FX */
     .flame.out {
       opacity: 0;
       transform: translateX(-50%) scale(0.2);
@@ -185,7 +284,7 @@
 
     .smoke {
       position: absolute;
-      top: -20px;
+      top: -18px;
       left: 50%;
       width: 6px;
       height: 6px;
@@ -205,7 +304,6 @@
       100% { transform: translateX(-30%) translateY(-70px) scale(6); opacity: 0; filter: blur(5px); }
     }
 
-    /* 5-Second Timer Bar */
     .countdown-bar-container {
       width: 180px;
       height: 4px;
@@ -237,17 +335,9 @@
     /* ========================================================
        STAGE 2: WISH LETTER FORM
     ======================================================== */
-    .wish-box {
+    .wish-stage {
       display: none;
-      opacity: 0;
-      transform: translateY(18px);
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .wish-box.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
+      animation: fadeIn 0.8s ease both;
     }
 
     .wish-textarea {
@@ -264,7 +354,7 @@
       resize: none;
       outline: none;
       transition: border 0.3s ease;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .wish-textarea:focus {
@@ -279,7 +369,7 @@
       border: none;
       color: #171026;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       cursor: pointer;
@@ -295,26 +385,21 @@
     /* ========================================================
        STAGE 3: THE WISHING WELL & LETTER DROP
     ======================================================== */
-    .well-scene {
+    .well-stage {
       display: none;
       position: relative;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 10px 0;
-      min-height: 240px;
+      min-height: 250px;
+      animation: fadeIn 0.8s ease both;
     }
 
-    .well-scene.active {
-      display: flex;
-    }
-
-    /* Miniature Folded Letter */
     .flying-letter {
       position: absolute;
       top: 10px;
-      width: 48px;
-      height: 34px;
+      width: 46px;
+      height: 32px;
       background: #fdf5e2;
       border: 1px solid #d4b470;
       border-radius: 4px;
@@ -334,9 +419,9 @@
       left: 0;
       width: 0;
       height: 0;
-      border-left: 24px solid transparent;
-      border-right: 24px solid transparent;
-      border-top: 16px solid #ecd8ab;
+      border-left: 23px solid transparent;
+      border-right: 23px solid transparent;
+      border-top: 15px solid #ecd8ab;
     }
 
     .flying-letter.cast-in {
@@ -361,14 +446,12 @@
       }
     }
 
-    /* SVG Mystical Wishing Well */
     .well-svg {
       width: 170px;
       height: 170px;
       filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7));
     }
 
-    /* Water Ripple Effect inside Well */
     .water-ripple {
       position: absolute;
       bottom: 28px;
@@ -391,19 +474,11 @@
     }
 
     /* ========================================================
-       STAGE 4: FINAL REVEAL FROM SPUDY
+       STAGE 4: FINAL CARD FROM SPUDY
     ======================================================== */
-    .final-reveal {
+    .final-stage {
       display: none;
-      opacity: 0;
-      transform: scale(0.95);
-      transition: all 0.8s ease-out;
-    }
-
-    .final-reveal.active {
-      display: block;
-      opacity: 1;
-      transform: scale(1);
+      animation: fadeIn 0.8s ease both;
     }
 
     .final-message {
@@ -412,12 +487,12 @@
       font-weight: 300;
       color: rgba(255, 255, 255, 0.88);
       max-width: 520px;
-      margin: 0 auto 20px;
+      margin: 0 auto 24px;
     }
 
-    .spudy-signature {
+    .signature-block {
       border-top: 1px solid rgba(245, 212, 135, 0.2);
-      padding-top: 16px;
+      padding-top: 20px;
       margin-top: 20px;
       display: inline-block;
     }
@@ -438,7 +513,11 @@
       color: var(--gold);
     }
 
-    /* Floating Heart Sprites */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .spark-bubble {
       position: fixed;
       pointer-events: none;
@@ -448,7 +527,7 @@
 
     @keyframes bubbleFloat {
       0% { transform: translateY(0) scale(0.5); opacity: 1; }
-      100% { transform: translateY(-90px) scale(1.4); opacity: 0; }
+      100% { transform: translateY(-80px) scale(1.3); opacity: 0; }
     }
   </style>
 </head>
@@ -458,15 +537,54 @@
   <div class="ambient-bg"></div>
   <div class="stars-layer" id="starsLayer"></div>
 
+  <!-- Music Status Top Right -->
+  <div class="top-controls" id="topControls">
+    <div class="audio-pill">
+      <div class="wave-bars">
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+      </div>
+      <span>Birthday Track Playing</span>
+    </div>
+  </div>
+
+  <!-- Hidden YouTube Background Player -->
+  <div id="youtube-player">
+    <iframe
+      id="youtube-frame"
+      src=""
+      title="Celebration Song"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
+  </div>
+
+  <!-- Main Multi-stage Glass Container -->
   <main class="stage-container">
     <div class="glass-card">
 
-      <!-- STAGE 1: CANDLE BLOW -->
-      <section id="candleStage">
-        <div class="eyebrow">A Birthday Ritual</div>
-        <h1 class="title">Blow The Candle, Feluna</h1>
+      <!-- STAGE 0: FRONT ENTRANCE -->
+      <section class="front-screen" id="frontStage">
+        <div class="eyebrow">A Special Dedication</div>
+        <h1 class="title">Feluna Chimhapa</h1>
         <p class="instruction">
-          Close your eyes, hold your deepest intention in your heart, and watch the flame fade.
+          A moment created just for you. Tap below to begin the celebration.
+        </p>
+
+        <button class="front-btn" id="startBtn" onclick="beginExperience()">
+          ✦ Open Celebration ✦
+        </button>
+      </section>
+
+
+      <!-- STAGE 1: CANDLE BLOW -->
+      <section class="candle-stage" id="candleStage">
+        <div class="eyebrow">The Ritual</div>
+        <h2 class="title">Blow The Candle, Feluna</h2>
+        <p class="instruction">
+          Make your silent wish and watch the flame drift away into the starlight.
         </p>
 
         <div class="candle-scene">
@@ -478,52 +596,47 @@
         </div>
 
         <div class="countdown-bar-container">
-          <div class="countdown-fill"></div>
+          <div class="countdown-fill" id="countdownFill"></div>
         </div>
         <div class="timer-text" id="timerLabel">Extinguishing in 5s...</div>
       </section>
 
 
-      <!-- STAGE 2: WISH LETTER BOX -->
-      <section class="wish-box" id="wishStage">
-        <div class="eyebrow">The Candle Is Out</div>
+      <!-- STAGE 2: WISH BOX -->
+      <section class="wish-stage" id="wishStage">
+        <div class="eyebrow">The Flame Is Out</div>
         <h2 class="title">Write Your Wish</h2>
         <p class="instruction">
-          Your breath carried the intention into the night. Now write down your secret wish and seal it for the wishing well.
+          Write your deepest wish and seal it so we can throw it into the wishing well.
         </p>
 
         <textarea
           class="wish-textarea"
           id="wishInput"
-          placeholder="Write your heartfelt wish for this year, Feluna..."
+          placeholder="Type your heartfelt wish here, Feluna..."
         ></textarea>
 
         <div>
-          <button class="btn-confirm" onclick="confirmWish()">
-            Seal & Throw In Well
+          <button class="btn-confirm" onclick="castWishIntoWell()">
+            Seal & Throw In Wishing Well
           </button>
         </div>
       </section>
 
 
-      <!-- STAGE 3: WISHING WELL ANIMATION -->
-      <section class="well-scene" id="wellStage">
+      <!-- STAGE 3: WISHING WELL -->
+      <section class="well-stage" id="wellStage">
         <div class="flying-letter" id="letterElem">✦</div>
 
-        <!-- Mystical Well SVG Art -->
+        <!-- Glowing SVG Well -->
         <svg class="well-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Well Base Exterior Stones -->
           <ellipse cx="80" cy="120" rx="52" ry="24" fill="#1b172a" stroke="#d4b470" stroke-width="2"/>
           <path d="M28 120 V140 C28 153 51 158 80 158 C109 158 132 153 132 140 V120" fill="#151122" stroke="#d4b470" stroke-width="2"/>
-          <!-- Shimmering Well Water -->
           <ellipse cx="80" cy="120" rx="44" ry="18" fill="url(#waterGlow)"/>
-          <!-- Support Pillars -->
           <path d="M40 120 V56" stroke="#9d7b38" stroke-width="4" stroke-linecap="round"/>
           <path d="M120 120 V56" stroke="#9d7b38" stroke-width="4" stroke-linecap="round"/>
-          <!-- Beam & Spindle -->
           <path d="M36 56 H124" stroke="#d4b470" stroke-width="4" stroke-linecap="round"/>
           <path d="M80 56 V78" stroke="#ffe399" stroke-width="1.5" stroke-dasharray="3 2"/>
-          <!-- Canopy Roof -->
           <path d="M24 56 L80 24 L136 56 Z" fill="#2b2046" stroke="#eec674" stroke-width="2.5"/>
 
           <defs>
@@ -539,17 +652,17 @@
       </section>
 
 
-      <!-- STAGE 4: FINAL MESSAGE FROM SPUDY -->
-      <section class="final-reveal" id="finalStage">
-        <div class="eyebrow">Wish Accepted By The Universe</div>
+      <!-- STAGE 4: FINAL NOTE FROM SPUDY -->
+      <section class="final-stage" id="finalStage">
+        <div class="eyebrow">Granted By The Stars</div>
         <h2 class="title">Happy Birthday, Feluna!</h2>
 
         <p class="final-message">
-          Your wish has vanished into the depths of the wishing well. May every step you take in this new chapter bring you peace, triumph, and endless light.
+          Your wish is safely resting in the well. May this year bring you boundless happiness, peace, great milestones, and unending laughter.
         </p>
 
-        <div class="spudy-signature">
-          <div class="sign-intro">Always rooting for you,</div>
+        <div class="signature-block">
+          <div class="sign-intro">Always wishing the best for you,</div>
           <div class="author-name">From your best friend, Spudy</div>
         </div>
       </section>
@@ -558,7 +671,7 @@
   </main>
 
   <script>
-    /* 1. Generate Sky Particles */
+    /* Sparkle Particle Generator */
     const starsLayer = document.getElementById("starsLayer");
     for (let i = 0; i < 60; i++) {
       const star = document.createElement("div");
@@ -573,89 +686,106 @@
       starsLayer.appendChild(star);
     }
 
-    /* 2. 5-Second Candle Timer */
-    const flame = document.getElementById("candleFlame");
-    const smoke = document.getElementById("smokeParticle");
-    const timerLabel = document.getElementById("timerLabel");
+    const videoId = "Z1hZ0ArATS4";
+    const youtubeFrame = document.getElementById("youtube-frame");
+    const topControls = document.getElementById("topControls");
+
+    const frontStage = document.getElementById("frontStage");
     const candleStage = document.getElementById("candleStage");
     const wishStage = document.getElementById("wishStage");
+    const wellStage = document.getElementById("wellStage");
+    const finalStage = document.getElementById("finalStage");
 
-    let secondsLeft = 5;
-    const interval = setInterval(() => {
-      secondsLeft--;
-      if (secondsLeft > 0) {
-        timerLabel.textContent = `Extinguishing in ${secondsLeft}s...`;
-      } else {
-        clearInterval(interval);
-        extinguishCandle();
-      }
-    }, 1000);
+    const candleFlame = document.getElementById("candleFlame");
+    const smokeParticle = document.getElementById("smokeParticle");
+    const timerLabel = document.getElementById("timerLabel");
+    const letterElem = document.getElementById("letterElem");
+    const ripple = document.getElementById("ripple");
 
-    function extinguishCandle() {
-      timerLabel.textContent = "Candle blown!";
-      flame.classList.add("out");
-      smoke.classList.add("rise");
+    /* 1. Begin Experience & Play Song */
+    function beginExperience() {
+      // Trigger YouTube audio stream
+      youtubeFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&loop=1&playlist=${videoId}&playsinline=1&rel=0&enablejsapi=1`;
+      topControls.style.display = "flex";
+
+      // Fade out front stage and reveal candle ritual
+      frontStage.style.opacity = "0";
+      frontStage.style.transition = "opacity 0.4s ease";
 
       setTimeout(() => {
-        candleStage.style.opacity = "0";
-        candleStage.style.transform = "scale(0.95)";
-        
-        setTimeout(() => {
-          candleStage.style.display = "none";
-          wishStage.classList.add("active");
-        }, 500);
+        frontStage.style.display = "none";
+        candleStage.style.display = "block";
+        startCandleCountdown();
+      }, 400);
+    }
+
+    /* 2. 5-Second Candle Extinguish Timer */
+    function startCandleCountdown() {
+      let timeLeft = 5;
+      const timer = setInterval(() => {
+        timeLeft--;
+        if (timeLeft > 0) {
+          timerLabel.textContent = `Extinguishing in ${timeLeft}s...`;
+        } else {
+          clearInterval(timer);
+          blowCandle();
+        }
       }, 1000);
     }
 
-    /* 3. Confirm Wish & Throw to Well */
-    const wishInput = document.getElementById("wishInput");
-    const wellStage = document.getElementById("wellStage");
-    const letterElem = document.getElementById("letterElem");
-    const ripple = document.getElementById("ripple");
-    const finalStage = document.getElementById("finalStage");
+    function blowCandle() {
+      timerLabel.textContent = "Candle blown!";
+      candleFlame.classList.add("out");
+      smokeParticle.classList.add("rise");
 
-    function confirmWish() {
-      // Transition from Form to Wishing Well
-      wishStage.classList.remove("active");
-      
+      setTimeout(() => {
+        candleStage.style.opacity = "0";
+        candleStage.style.transition = "opacity 0.5s ease";
+
+        setTimeout(() => {
+          candleStage.style.display = "none";
+          wishStage.style.display = "block";
+        }, 500);
+      }, 1200);
+    }
+
+    /* 3. Cast Wish Into The Well */
+    function castWishIntoWell() {
+      wishStage.style.opacity = "0";
+      wishStage.style.transition = "opacity 0.4s ease";
+
       setTimeout(() => {
         wishStage.style.display = "none";
-        wellStage.classList.add("active");
+        wellStage.style.display = "flex";
 
-        // Animate Letter falling into well
         setTimeout(() => {
           letterElem.classList.add("cast-in");
           ripple.classList.add("splash");
 
-          // Burst particles upon splash
-          setTimeout(() => {
-            spawnSplashSparkles();
-          }, 1250);
+          setTimeout(spawnSplashSparkles, 1250);
 
-          // Transition to final Spudy message
           setTimeout(() => {
             wellStage.style.opacity = "0";
             wellStage.style.transition = "opacity 0.6s ease";
-            
+
             setTimeout(() => {
-              wellStage.classList.remove("active");
-              finalStage.classList.add("active");
+              wellStage.style.display = "none";
+              finalStage.style.display = "block";
             }, 600);
           }, 2400);
 
         }, 300);
-
       }, 400);
     }
 
-    /* 4. Splash Sparkles Animation */
+    /* Sparkles on Splash */
     function spawnSplashSparkles() {
       const wellRect = wellStage.getBoundingClientRect();
       const centerX = wellRect.left + wellRect.width / 2;
       const centerY = wellRect.top + wellRect.height / 2 + 30;
 
       const symbols = ["✧", "✦", "★", "·"];
-      for (let i = 0; i < 14; i++) {
+      for (let i = 0; i < 15; i++) {
         const spark = document.createElement("div");
         spark.className = "spark-bubble";
         spark.textContent = symbols[Math.floor(Math.random() * symbols.length)];
