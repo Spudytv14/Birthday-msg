@@ -14,26 +14,20 @@
     }
 
     :root {
-      --gold: #ffd76a;
-      --gold-light: #fff3b0;
-      --pink: #ff6fae;
-      --purple: #9d6bff;
-      --deep: #080414;
-      --white: #fff;
+      --primary: #ffffff;
+      --secondary: #cccccc;
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --accent: #4a90e2;
     }
 
     html,
     body {
       width: 100%;
       height: 100%;
-      overflow: hidden;
-      font-family: "Trebuchet MS", Arial, sans-serif;
-      background: var(--deep);
-      color: white;
-    }
-
-    body {
-      position: relative;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--primary);
     }
 
     /* =========================
@@ -47,7 +41,7 @@
       height: 100vh;
       z-index: -20;
       pointer-events: none;
-      opacity: 0.08;
+      opacity: 0.05;
     }
 
     #youtube-player iframe {
@@ -60,417 +54,81 @@
     }
 
     /* =========================
-       BACKGROUND
-    ========================= */
-
-    .background {
-      position: fixed;
-      inset: 0;
-      z-index: -15;
-      background:
-        radial-gradient(circle at 50% 40%,
-          rgba(120, 68, 255, 0.35),
-          transparent 38%),
-        radial-gradient(circle at 20% 20%,
-          rgba(255, 78, 157, 0.16),
-          transparent 30%),
-        radial-gradient(circle at 80% 80%,
-          rgba(255, 204, 77, 0.12),
-          transparent 30%),
-        linear-gradient(
-          135deg,
-          #05020c,
-          #0d0620,
-          #130725,
-          #07030e
-        );
-    }
-
-    .background::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(
-          circle at center,
-          transparent 15%,
-          rgba(0, 0, 0, 0.7) 100%
-        );
-    }
-
-    /* =========================
-       STARS / SPARKLES
-    ========================= */
-
-    .sparkles {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      z-index: -5;
-      pointer-events: none;
-    }
-
-    .sparkle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: white;
-      border-radius: 50%;
-      box-shadow:
-        0 0 8px white,
-        0 0 15px var(--gold);
-      animation: twinkle 2s infinite ease-in-out;
-    }
-
-    @keyframes twinkle {
-      0%, 100% {
-        opacity: 0.15;
-        transform: scale(0.6);
-      }
-
-      50% {
-        opacity: 1;
-        transform: scale(1.5);
-      }
-    }
-
-    /* =========================
        MAIN
     ========================= */
 
     .page {
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 30px;
-      position: relative;
+      padding: 40px 20px;
     }
 
     .card {
-      width: min(1000px, 95vw);
-      min-height: 650px;
-      border: 1px solid rgba(255, 215, 106, 0.3);
-      border-radius: 35px;
-      background: rgba(13, 6, 28, 0.66);
-      backdrop-filter: blur(12px);
-      box-shadow:
-        0 0 80px rgba(157, 107, 255, 0.18),
-        0 0 120px rgba(255, 111, 174, 0.08),
-        inset 0 0 40px rgba(255, 255, 255, 0.02);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 45px 25px;
-      position: relative;
-      overflow: hidden;
+      width: 100%;
+      max-width: 800px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      background: var(--card-bg);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      padding: 60px 40px;
       text-align: center;
-      animation: cardEnter 1.5s ease;
+      animation: fadeIn 1s ease;
     }
 
-    @keyframes cardEnter {
+    @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: scale(0.86) translateY(35px);
+        transform: translateY(10px);
       }
-
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    /* glowing border */
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      border-radius: 35px;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 215, 106, 0.35),
-        transparent,
-        rgba(255, 111, 174, 0.35),
-        transparent
-      );
-      background-size: 300% 100%;
-      animation: borderMove 8s linear infinite;
-      z-index: -1;
-    }
-
-    @keyframes borderMove {
-      0% {
-        background-position: 0% 0;
-      }
-
-      100% {
-        background-position: 300% 0;
-      }
-    }
-
-    .small-title {
-      color: var(--gold);
-      text-transform: uppercase;
-      font-size: 14px;
-      font-weight: bold;
-      letter-spacing: 5px;
-      margin-bottom: 15px;
-      animation: fadeUp 1s 0.2s both;
-    }
-
-    h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(48px, 9vw, 100px);
-      line-height: 0.95;
-      margin-bottom: 20px;
-      background: linear-gradient(
-        90deg,
-        #fff,
-        #ffe58a,
-        #ff8ec2,
-        #fff
-      );
-      background-size: 300% auto;
-      color: transparent;
-      -webkit-background-clip: text;
-      background-clip: text;
-      animation:
-        fadeUp 1.1s 0.35s both,
-        shineText 7s linear infinite;
-      text-shadow: 0 0 35px rgba(255, 215, 106, 0.1);
-    }
-
-    @keyframes shineText {
-      to {
-        background-position: 300% center;
-      }
-    }
-
-    .subtitle {
-      max-width: 680px;
-      font-size: clamp(17px, 2.2vw, 22px);
-      line-height: 1.6;
-      color: rgba(255,255,255,0.84);
-      margin-bottom: 25px;
-      animation: fadeUp 1.1s 0.5s both;
-    }
-
-    .message {
-      max-width: 650px;
-      color: #fff;
-      line-height: 1.7;
-      font-size: 16px;
-      opacity: 0.78;
-      animation: fadeUp 1.1s 0.65s both;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
 
-    /* =========================
-       CAKE
-    ========================= */
-
-    .cake-area {
-      margin: 30px 0 25px;
-      position: relative;
-      width: 350px;
-      height: 185px;
-      animation: cakeAppear 1.4s 0.7s both;
+    .small-title {
+      color: var(--secondary);
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
     }
 
-    @keyframes cakeAppear {
-      from {
-        opacity: 0;
-        transform: translateY(40px) scale(0.8);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+    h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.2;
+      margin-bottom: 24px;
+      font-weight: 300;
+      color: var(--primary);
     }
 
-    .cake {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 285px;
-      height: 100px;
+    .subtitle {
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.6;
+      color: var(--secondary);
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .cake-top {
-      position: absolute;
-      top: 20px;
-      left: 0;
-      width: 100%;
-      height: 70px;
-      border-radius: 18px;
-      background:
-        linear-gradient(
-          180deg,
-          #ff9fc5,
-          #e75091
-        );
-      border: 2px solid rgba(255,255,255,0.18);
-      box-shadow:
-        0 15px 40px rgba(255, 70, 150, 0.25),
-        inset 0 10px 20px rgba(255,255,255,0.12);
+    .message {
+      color: var(--secondary);
+      line-height: 1.8;
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto 40px;
     }
 
-    .cake-top::before {
-      content: "";
-      position: absolute;
-      top: -12px;
-      left: 5%;
-      width: 90%;
-      height: 27px;
-      border-radius: 50%;
-      background: #ffd8e6;
-      box-shadow: 0 5px 15px rgba(255,255,255,0.18);
-    }
-
-    .icing {
-      position: absolute;
-      top: 5px;
-      left: 12px;
-      width: calc(100% - 24px);
-      height: 35px;
-      border-radius: 50%;
-      background: #fff1f7;
-    }
-
-    .icing::after {
-      content: "♥  ♥  ♥  ♥  ♥";
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      top: 7px;
-      color: #e86b9c;
-      font-size: 12px;
-      letter-spacing: 8px;
-    }
-
-    /* =========================
-       CANDLES
-    ========================= */
-
-    .candles {
-      position: absolute;
-      left: 50%;
-      top: -30px;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 25px;
-      align-items: flex-end;
-      z-index: 4;
-    }
-
-    .candle {
-      width: 16px;
-      height: 64px;
-      border-radius: 4px 4px 6px 6px;
-      position: relative;
-      background:
-        repeating-linear-gradient(
-          135deg,
-          #fefefe 0,
-          #fefefe 7px,
-          #ff8fc1 7px,
-          #ff8fc1 14px
-        );
-      box-shadow:
-        0 0 15px rgba(255,255,255,0.2);
-    }
-
-    .candle:nth-child(2) {
-      height: 78px;
-    }
-
-    .candle:nth-child(3) {
-      height: 64px;
-    }
-
-    .wick {
-      position: absolute;
-      top: -9px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 3px;
-      height: 11px;
-      background: #292018;
-      border-radius: 50%;
-    }
-
-    .flame {
-      position: absolute;
-      top: -43px;
-      left: 50%;
-      width: 19px;
-      height: 31px;
-      transform: translateX(-50%);
-      background:
-        radial-gradient(
-          ellipse at center bottom,
-          #fff 0%,
-          #ffe768 25%,
-          #ffb300 55%,
-          #ff5d00 80%,
-          transparent 100%
-        );
-      border-radius: 50% 50% 55% 55%;
-      filter:
-        drop-shadow(0 0 8px #fff1a1)
-        drop-shadow(0 0 18px #ffbb33)
-        drop-shadow(0 0 30px rgba(255, 145, 0, 0.8));
-      animation:
-        flicker 0.12s infinite alternate,
-        flameDance 1.5s infinite ease-in-out;
-      transform-origin: bottom center;
-    }
-
-    @keyframes flicker {
-      0% {
-        transform: translateX(-50%) scale(1) rotate(-2deg);
-      }
-
-      100% {
-        transform: translateX(-50%) scale(1.09, 0.92) rotate(3deg);
-      }
-    }
-
-    @keyframes flameDance {
-      0%, 100% {
-        height: 31px;
-      }
-
-      50% {
-        height: 37px;
-      }
-    }
-
-    /* extra flame aura */
-    .flame::before {
-      content: "";
-      position: absolute;
-      inset: -15px;
-      border-radius: 50%;
-      background: rgba(255, 183, 58, 0.10);
-      filter: blur(10px);
-      z-index: -1;
+    .sign-off {
+      margin-top: 30px;
+      font-size: 18px;
+      font-style: italic;
+      color: var(--primary);
     }
 
     /* =========================
@@ -478,27 +136,24 @@
     ========================= */
 
     .music-button {
-      border: 1px solid rgba(255, 215, 106, 0.6);
-      background: rgba(255,255,255,0.08);
-      color: white;
-      padding: 13px 24px;
-      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: transparent;
+      color: var(--primary);
+      padding: 12px 24px;
+      border-radius: 6px;
       cursor: pointer;
       font-size: 14px;
-      transition: 0.3s;
-      animation: fadeUp 1s 0.9s both;
-      backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
     }
 
     .music-button:hover {
-      background: rgba(255, 215, 106, 0.17);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(255, 215, 106, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
     .music-button.playing {
-      border-color: #ff7fb9;
-      box-shadow: 0 0 25px rgba(255, 127, 185, 0.2);
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     /* =========================
@@ -507,142 +162,36 @@
 
     .footer {
       position: absolute;
-      bottom: 22px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 12px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 2px;
-      white-space: nowrap;
-    }
-
-    /* =========================
-       FLOATING HEARTS
-    ========================= */
-
-    .heart {
-      position: fixed;
-      bottom: -50px;
-      pointer-events: none;
-      font-size: 20px;
-      animation: floatHeart linear forwards;
-      z-index: 10;
-      opacity: 0.8;
-    }
-
-    @keyframes floatHeart {
-      0% {
-        transform:
-          translateY(0)
-          translateX(0)
-          rotate(0deg)
-          scale(0.8);
-        opacity: 0;
-      }
-
-      10% {
-        opacity: 0.9;
-      }
-
-      80% {
-        opacity: 0.65;
-      }
-
-      100% {
-        transform:
-          translateY(-110vh)
-          translateX(var(--drift))
-          rotate(360deg)
-          scale(1.4);
-        opacity: 0;
-      }
-    }
-
-    /* =========================
-       CONFETTI
-    ========================= */
-
-    .confetti {
-      position: fixed;
-      width: 8px;
-      height: 12px;
-      top: -20px;
-      z-index: 20;
-      pointer-events: none;
-      animation:
-        confettiFall linear forwards,
-        confettiSpin 1s linear infinite;
-    }
-
-    @keyframes confettiFall {
-      to {
-        transform: translateY(110vh);
-      }
-    }
-
-    @keyframes confettiSpin {
-      to {
-        rotate: 360deg;
-      }
-    }
-
-    /* =========================
-       MUSIC STATUS
-    ========================= */
-
-    .music-status {
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      z-index: 100;
-      padding: 9px 14px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(8px);
-      color: rgba(255,255,255,0.7);
-      font-size: 11px;
+      color: rgba(255, 255, 255, 0.3);
       letter-spacing: 1px;
     }
 
+    .music-status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      padding: 8px 16px;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 12px;
+    }
+
     @media (max-width: 600px) {
-      .page {
-        padding: 15px;
-      }
-
       .card {
-        min-height: 92vh;
-        border-radius: 25px;
-        padding: 35px 18px;
-      }
-
-      .cake-area {
-        transform: scale(0.78);
-        margin-top: 5px;
-        margin-bottom: 0;
-      }
-
-      .subtitle {
-        font-size: 16px;
-      }
-
-      .message {
-        font-size: 14px;
-      }
-
-      .footer {
-        bottom: 10px;
-        font-size: 9px;
+        padding: 40px 20px;
       }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- Background -->
-  <div class="background"></div>
-  <div class="sparkles" id="sparkles"></div>
 
   <!-- YouTube Background Song -->
   <div id="youtube-player">
@@ -657,14 +206,12 @@
   </div>
 
   <div class="music-status" id="musicStatus">
-    ♪ CELEBRATION MUSIC
+    ♪ MUSIC READY
   </div>
 
   <!-- Main -->
   <main class="page">
-
     <section class="card">
-
       <div class="small-title">
         A Special Celebration
       </div>
@@ -680,40 +227,6 @@
         person you are.
       </p>
 
-      <!-- Cake + Candles -->
-      <div class="cake-area">
-
-        <div class="candles">
-
-          <div class="candle">
-            <div class="wick"></div>
-            <div class="flame"></div>
-          </div>
-
-          <div class="candle">
-            <div class="wick"></div>
-            <div class="flame"></div>
-          </div>
-
-          <div class="candle">
-            <div class="wick"></div>
-            <div class="flame"></div>
-          </div>
-
-        </div>
-
-        <div class="cake">
-
-          <div class="cake-top">
-
-            <div class="icing"></div>
-
-          </div>
-
-        </div>
-
-      </div>
-
       <p class="message">
         May your days be filled with laughter,
         unforgettable moments, love, success,
@@ -724,17 +237,19 @@
         </strong>
       </p>
 
+      <p class="sign-off">
+        From your best friend, Spudy
+      </p>
+
       <br>
 
       <button
         class="music-button"
         id="musicButton"
         onclick="startMusic()">
-        ♪ Tap to Play Celebration Music
+        ♪ Play Music
       </button>
-
     </section>
-
   </main>
 
   <div class="footer">
@@ -743,166 +258,13 @@
 
   <script>
     /* =========================
-       CREATE SPARKLES
-    ========================= */
-
-    const sparkleContainer =
-      document.getElementById("sparkles");
-
-    for (let i = 0; i < 90; i++) {
-
-      const sparkle =
-        document.createElement("div");
-
-      sparkle.className = "sparkle";
-
-      sparkle.style.left =
-        Math.random() * 100 + "%";
-
-      sparkle.style.top =
-        Math.random() * 100 + "%";
-
-      sparkle.style.animationDelay =
-        Math.random() * 3 + "s";
-
-      sparkle.style.animationDuration =
-        (1.5 + Math.random() * 3) + "s";
-
-      const size =
-        1 + Math.random() * 4;
-
-      sparkle.style.width = size + "px";
-      sparkle.style.height = size + "px";
-
-      sparkleContainer.appendChild(sparkle);
-    }
-
-
-    /* =========================
-       FLOATING HEARTS
-    ========================= */
-
-    function createHeart() {
-
-      const heart =
-        document.createElement("div");
-
-      heart.className = "heart";
-
-      const hearts = [
-        "♥",
-        "❤",
-        "♡",
-        "✦",
-        "✧"
-      ];
-
-      heart.innerHTML =
-        hearts[Math.floor(Math.random() * hearts.length)];
-
-      heart.style.left =
-        Math.random() * 100 + "vw";
-
-      heart.style.setProperty(
-        "--drift",
-        (Math.random() * 160 - 80) + "px"
-      );
-
-      heart.style.animationDuration =
-        (6 + Math.random() * 6) + "s";
-
-      heart.style.fontSize =
-        (12 + Math.random() * 20) + "px";
-
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 13000);
-    }
-
-    setInterval(createHeart, 900);
-
-
-    /* =========================
-       CONFETTI
-    ========================= */
-
-    function createConfetti(amount = 75) {
-
-      const pieces = [];
-
-      for (let i = 0; i < amount; i++) {
-
-        const piece =
-          document.createElement("div");
-
-        piece.className = "confetti";
-
-        piece.style.left =
-          Math.random() * 100 + "vw";
-
-        piece.style.background =
-          [
-            "#ffd76a",
-            "#ff6fae",
-            "#9d6bff",
-            "#ffffff",
-            "#55d6ff"
-          ][Math.floor(Math.random() * 5)];
-
-        piece.style.width =
-          (5 + Math.random() * 6) + "px";
-
-        piece.style.height =
-          (7 + Math.random() * 10) + "px";
-
-        piece.style.opacity =
-          0.5 + Math.random() * 0.5;
-
-        const duration =
-          4 + Math.random() * 5;
-
-        piece.style.animationDuration =
-          duration + "s, 1s";
-
-        piece.style.animationDelay =
-          Math.random() * 2 + "s";
-
-        document.body.appendChild(piece);
-
-        pieces.push(piece);
-
-        setTimeout(() => {
-          piece.remove();
-        }, (duration + 3) * 1000);
-      }
-    }
-
-    setTimeout(() => {
-      createConfetti(100);
-    }, 1600);
-
-    setInterval(() => {
-      createConfetti(35);
-    }, 9000);
-
-
-    /* =========================
        MUSIC
     ========================= */
 
     let musicStarted = false;
 
     function startMusic() {
-
-      const frame =
-        document.getElementById("youtube-frame");
-
-      /*
-        Reloading the iframe with autoplay is a useful
-        fallback after the visitor interacts with the page.
-      */
+      const frame = document.getElementById("youtube-frame");
 
       frame.src =
         "https://www.youtube.com/embed/egVAW6l_QU8" +
@@ -917,70 +279,27 @@
 
       musicStarted = true;
 
-      const button =
-        document.getElementById("musicButton");
-
+      const button = document.getElementById("musicButton");
       button.classList.add("playing");
+      button.innerHTML = "♫ Music Playing";
 
-      button.innerHTML =
-        "♫ Celebration Music Playing";
-
-      document.getElementById("musicStatus")
-        .innerHTML =
-        "♫ MUSIC PLAYING";
+      document.getElementById("musicStatus").innerHTML = "♫ MUSIC PLAYING";
     }
-
 
     /* =========================
        FIRST USER INTERACTION
-       ========================= */
+    ========================= */
 
     document.addEventListener(
       "click",
       function firstInteraction() {
-
         if (!musicStarted) {
           startMusic();
         }
-
-        document.removeEventListener(
-          "click",
-          firstInteraction
-        );
-
+        document.removeEventListener("click", firstInteraction);
       },
       { once: true }
     );
-
-
-    /* =========================
-       CANDLE EFFECT
-    ========================= */
-
-    const candles =
-      document.querySelectorAll(".flame");
-
-    candles.forEach((flame, index) => {
-
-      flame.style.animationDelay =
-        (index * 0.12) + "s";
-
-    });
-
-
-    /* =========================
-       EXTRA BURST WHEN PAGE LOADS
-    ========================= */
-
-    setTimeout(() => {
-
-      for (let i = 0; i < 25; i++) {
-        setTimeout(() => createHeart(), i * 100);
-      }
-
-    }, 1800);
-
   </script>
-
 </body>
 </html>
