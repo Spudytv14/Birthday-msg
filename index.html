@@ -90,7 +90,7 @@
       top: 24px;
       right: 28px;
       z-index: 30;
-      display: none; /* revealed once music starts */
+      display: none;
       align-items: center;
     }
 
@@ -478,6 +478,7 @@
     ======================================================== */
     .final-stage {
       display: none;
+      position: relative;
       animation: fadeIn 0.8s ease both;
     }
 
@@ -513,6 +514,108 @@
       color: var(--gold);
     }
 
+    /* ========================================================
+       POPPING BIRTHDAY CONES & CONFETTI SYSTEM
+    ======================================================== */
+    .popper-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 50;
+      overflow: hidden;
+      display: none;
+    }
+
+    .popper-container.active {
+      display: block;
+    }
+
+    .birthday-cone {
+      position: absolute;
+      width: 100px;
+      height: 130px;
+      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
+      transform-origin: bottom center;
+    }
+
+    .birthday-cone.left {
+      bottom: 25px;
+      left: 30px;
+      transform: rotate(42deg) scale(0);
+    }
+
+    .birthday-cone.right {
+      bottom: 25px;
+      right: 30px;
+      transform: rotate(-42deg) scaleX(-1) scale(0);
+    }
+
+    .birthday-cone.left.pop {
+      animation: conePopLeft 0.75s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    }
+
+    .birthday-cone.right.pop {
+      animation: conePopRight 0.75s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    }
+
+    @keyframes conePopLeft {
+      0% { transform: rotate(42deg) scale(0); }
+      60% { transform: rotate(42deg) scale(1.18); }
+      75% { transform: rotate(38deg) scale(0.92) translate(-6px, 8px); } /* recoil */
+      100% { transform: rotate(42deg) scale(1); }
+    }
+
+    @keyframes conePopRight {
+      0% { transform: rotate(-42deg) scaleX(-1) scale(0); }
+      60% { transform: rotate(-42deg) scaleX(-1) scale(1.18); }
+      75% { transform: rotate(-38deg) scaleX(-1) scale(0.92) translate(6px, 8px); } /* recoil */
+      100% { transform: rotate(-42deg) scaleX(-1) scale(1); }
+    }
+
+    /* Blast muzzle flash ring */
+    .blast-flash {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff, #ffd977 40%, transparent 75%);
+      opacity: 0;
+      transform: scale(0.2);
+      pointer-events: none;
+    }
+
+    .blast-flash.burst {
+      animation: muzzleFlash 0.45s ease-out forwards;
+    }
+
+    @keyframes muzzleFlash {
+      0% { opacity: 1; transform: scale(0.4); }
+      50% { opacity: 0.9; transform: scale(2.2); }
+      100% { opacity: 0; transform: scale(3.5); }
+    }
+
+    /* Confetti & Streamer Elements */
+    .confetti-piece {
+      position: absolute;
+      opacity: 0;
+      will-change: transform, opacity;
+      animation: confettiShoot linear forwards;
+    }
+
+    @keyframes confettiShoot {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg) scale(0.8);
+      }
+      85% {
+        opacity: 0.9;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--dest-x), var(--dest-y)) rotate(var(--spin)) scale(var(--scale-end));
+      }
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(14px); }
       to { opacity: 1; transform: translateY(0); }
@@ -528,6 +631,24 @@
     @keyframes bubbleFloat {
       0% { transform: translateY(0) scale(0.5); opacity: 1; }
       100% { transform: translateY(-80px) scale(1.3); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .glass-card {
+        padding: 40px 22px;
+      }
+      .birthday-cone {
+        width: 75px;
+        height: 100px;
+      }
+      .birthday-cone.left {
+        left: 10px;
+        bottom: 15px;
+      }
+      .birthday-cone.right {
+        right: 10px;
+        bottom: 15px;
+      }
     }
   </style>
 </head>
@@ -559,6 +680,54 @@
       allow="autoplay; encrypted-media"
       referrerpolicy="strict-origin-when-cross-origin">
     </iframe>
+  </div>
+
+  <!-- Party Poppers & Confetti Screen Overlay -->
+  <div class="popper-container" id="popperContainer">
+
+    <!-- Left Birthday Cone SVG -->
+    <div class="birthday-cone left" id="coneLeft">
+      <div class="blast-flash" id="flashLeft" style="top: 0; left: 25px;"></div>
+      <svg viewBox="0 0 100 130" width="100%" height="100%">
+        <!-- Cone Base & Striped Pattern -->
+        <defs>
+          <linearGradient id="coneStripe" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffd56b" />
+            <stop offset="25%" stop-color="#ff6b9d" />
+            <stop offset="50%" stop-color="#8a55ff" />
+            <stop offset="75%" stop-color="#4ce0d2" />
+            <stop offset="100%" stop-color="#ffd56b" />
+          </linearGradient>
+          <linearGradient id="goldCap" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ffe8a3" />
+            <stop offset="50%" stop-color="#f5d487" />
+            <stop offset="100%" stop-color="#cca045" />
+          </linearGradient>
+        </defs>
+        <!-- Triangle Cone Body -->
+        <polygon points="50,125 15,22 85,22" fill="url(#coneStripe)" stroke="#fff" stroke-width="1.5" />
+        <!-- Top Rim/Mouth -->
+        <ellipse cx="50" cy="22" rx="35" ry="10" fill="url(#goldCap)" stroke="#fff" stroke-width="1.5" />
+        <!-- Inner mouth shadow -->
+        <ellipse cx="50" cy="22" rx="27" ry="6" fill="#1c0f2b" />
+        <!-- Little Confetti Ribbons popping out of cone tip -->
+        <path d="M50,125 Q45,130 40,132" stroke="#f5d487" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="50" cy="125" r="4" fill="#ff7597"/>
+      </svg>
+    </div>
+
+    <!-- Right Birthday Cone SVG -->
+    <div class="birthday-cone right" id="coneRight">
+      <div class="blast-flash" id="flashRight" style="top: 0; left: 25px;"></div>
+      <svg viewBox="0 0 100 130" width="100%" height="100%">
+        <polygon points="50,125 15,22 85,22" fill="url(#coneStripe)" stroke="#fff" stroke-width="1.5" />
+        <ellipse cx="50" cy="22" rx="35" ry="10" fill="url(#goldCap)" stroke="#fff" stroke-width="1.5" />
+        <ellipse cx="50" cy="22" rx="27" ry="6" fill="#1c0f2b" />
+        <path d="M50,125 Q45,130 40,132" stroke="#f5d487" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="50" cy="125" r="4" fill="#ff7597"/>
+      </svg>
+    </div>
+
   </div>
 
   <!-- Main Multi-stage Glass Container -->
@@ -652,10 +821,10 @@
       </section>
 
 
-      <!-- STAGE 4: FINAL NOTE FROM SPUDY -->
+      <!-- STAGE 4: FINAL NOTE & HAPPY BIRTHDAY WITH POPPERS -->
       <section class="final-stage" id="finalStage">
         <div class="eyebrow">Granted By The Stars</div>
-        <h2 class="title">Happy Birthday, Feluna!</h2>
+        <h2 class="title" id="finalTitle">Happy Birthday, Feluna!</h2>
 
         <p class="final-message">
           Your wish is safely resting in the well. May this year bring you boundless happiness, peace, great milestones, and unending laughter.
@@ -704,11 +873,9 @@
 
     /* 1. Begin Experience & Play Song */
     function beginExperience() {
-      // Trigger YouTube audio stream
       youtubeFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&loop=1&playlist=${videoId}&playsinline=1&rel=0&enablejsapi=1`;
       topControls.style.display = "flex";
 
-      // Fade out front stage and reveal candle ritual
       frontStage.style.opacity = "0";
       frontStage.style.transition = "opacity 0.4s ease";
 
@@ -771,6 +938,9 @@
             setTimeout(() => {
               wellStage.style.display = "none";
               finalStage.style.display = "block";
+              
+              // Trigger the popping birthday cones!
+              triggerBirthdayPoppers();
             }, 600);
           }, 2400);
 
@@ -778,7 +948,7 @@
       }, 400);
     }
 
-    /* Sparkles on Splash */
+    /* Splash Sparkles Animation */
     function spawnSplashSparkles() {
       const wellRect = wellStage.getBoundingClientRect();
       const centerX = wellRect.left + wellRect.width / 2;
@@ -796,6 +966,93 @@
         document.body.appendChild(spark);
 
         setTimeout(() => spark.remove(), 1800);
+      }
+    }
+
+    /* ========================================================
+       4. BIRTHDAY CONES POP & CONFETTI CANNON
+    ======================================================== */
+    function triggerBirthdayPoppers() {
+      const popperContainer = document.getElementById("popperContainer");
+      const coneLeft = document.getElementById("coneLeft");
+      const coneRight = document.getElementById("coneRight");
+      const flashLeft = document.getElementById("flashLeft");
+      const flashRight = document.getElementById("flashRight");
+
+      popperContainer.classList.add("active");
+      coneLeft.classList.add("pop");
+      coneRight.classList.add("pop");
+
+      // Release the confetti spray at peak of recoil pop (~220ms)
+      setTimeout(() => {
+        flashLeft.classList.add("burst");
+        flashRight.classList.add("burst");
+
+        // Fire cannon bursts from both cones
+        launchConfettiBlast("left");
+        launchConfettiBlast("right");
+
+        // Secondary celebratory bursts for a full celebratory atmosphere
+        setTimeout(() => {
+          launchConfettiBlast("left", 35);
+          launchConfettiBlast("right", 35);
+        }, 500);
+      }, 220);
+    }
+
+    function launchConfettiBlast(originSide, count = 65) {
+      const popperContainer = document.getElementById("popperContainer");
+      const colors = ["#f5d487", "#ff7597", "#b388ff", "#5ce1e6", "#ffffff", "#ffd166"];
+      
+      const isLeft = originSide === "left";
+      const startX = isLeft ? 70 : (window.innerWidth - 70);
+      const startY = window.innerHeight - 80;
+
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti-piece";
+
+        const isStreamer = Math.random() > 0.65;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+
+        if (isStreamer) {
+          piece.style.width = (4 + Math.random() * 3) + "px";
+          piece.style.height = (14 + Math.random() * 18) + "px";
+          piece.style.borderRadius = "2px";
+        } else {
+          const sz = 6 + Math.random() * 8;
+          piece.style.width = sz + "px";
+          piece.style.height = sz + "px";
+          piece.style.borderRadius = Math.random() > 0.4 ? "2px" : "50%";
+        }
+
+        piece.style.background = color;
+        piece.style.left = startX + "px";
+        piece.style.top = startY + "px";
+
+        // Trajectory math: Arc toward upper-middle
+        let angle;
+        if (isLeft) {
+          angle = -(Math.random() * 45 + 30) * (Math.PI / 180); // 30° to 75° up-right
+        } else {
+          angle = -(Math.random() * 45 + 105) * (Math.PI / 180); // 105° to 150° up-left
+        }
+
+        const distance = 280 + Math.random() * (window.innerWidth * 0.55);
+        const destX = Math.cos(angle) * distance;
+        const destY = Math.sin(angle) * distance + (120 + Math.random() * 100); // Gravity pull-down
+
+        piece.style.setProperty("--dest-x", `${destX}px`);
+        piece.style.setProperty("--dest-y", `${destY}px`);
+        piece.style.setProperty("--spin", `${(Math.random() * 720 - 360)}deg`);
+        piece.style.setProperty("--scale-end", `${0.4 + Math.random() * 0.6}`);
+
+        const duration = 2 + Math.random() * 1.8;
+        piece.style.animationDuration = `${duration}s`;
+
+        popperContainer.appendChild(piece);
+
+        setTimeout(() => piece.remove(), duration * 1000);
       }
     }
   </script>
