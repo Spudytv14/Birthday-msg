@@ -84,14 +84,36 @@
       z-index: -10;
     }
 
+    #musicOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.8s ease;
+    }
+    #musicOverlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
     /* Top Corner Audio Pill */
     .top-controls {
       position: fixed;
-      top: 24px;
-      right: 28px;
-      z-index: 30;
-      display: none;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      display: flex;
       align-items: center;
+      transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .top-controls.playing {
+      top: 24px;
+      left: calc(100% - 28px);
+      transform: translateX(-100%);
+      opacity: 0.6;
     }
 
     .audio-pill {
@@ -658,15 +680,17 @@
   <div class="ambient-bg"></div>
   <div class="stars-layer" id="starsLayer"></div>
 
+  <div id="musicOverlay"></div>
+
   <!-- Music Status Top Right -->
   <div class="top-controls" id="topControls">
-    <div class="audio-pill">
+    <div class="audio-pill" onclick="startMusic()">
       <div class="wave-bars">
         <div class="wave-bar"></div>
         <div class="wave-bar"></div>
         <div class="wave-bar"></div>
       </div>
-      <span>Birthday Track Playing</span>
+      <span id="musicBtnText">Play Music</span>
     </div>
   </div>
 
@@ -753,21 +777,16 @@
         <div class="eyebrow">The Ritual</div>
         <h2 class="title">Blow The Candle, Feluna</h2>
         <p class="instruction">
-          Make your silent wish and watch the flame drift away into the starlight.
+          Make your silent wish and tap the candle to blow it out.
         </p>
 
-        <div class="candle-scene">
+        <div class="candle-scene" onclick="blowCandle()" style="cursor: pointer;">
           <div class="flame" id="candleFlame"></div>
           <div class="smoke" id="smokeParticle"></div>
           <div class="candle-body">
             <div class="wick"></div>
           </div>
         </div>
-
-        <div class="countdown-bar-container">
-          <div class="countdown-fill" id="countdownFill"></div>
-        </div>
-        <div class="timer-text" id="timerLabel">Extinguishing in 5s...</div>
       </section>
 
 
@@ -871,37 +890,28 @@
     const letterElem = document.getElementById("letterElem");
     const ripple = document.getElementById("ripple");
 
-    /* 1. Begin Experience & Play Song */
-    function beginExperience() {
-      youtubeFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&loop=1&playlist=${videoId}&playsinline=1&rel=0&enablejsapi=1`;
-      topControls.style.display = "flex";
+    function startMusic() {
+      if (topControls.classList.contains("playing")) return;
 
+      youtubeFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&loop=1&playlist=${videoId}&playsinline=1&rel=0&enablejsapi=1`;
+
+      document.getElementById("musicOverlay").classList.add("hidden");
+      topControls.classList.add("playing");
+      document.getElementById("musicBtnText").textContent = "Birthday Track Playing";
+    }
+
+    /* 1. Begin Experience */
+    function beginExperience() {
       frontStage.style.opacity = "0";
       frontStage.style.transition = "opacity 0.4s ease";
 
       setTimeout(() => {
         frontStage.style.display = "none";
         candleStage.style.display = "block";
-        startCandleCountdown();
       }, 400);
     }
 
-    /* 2. 5-Second Candle Extinguish Timer */
-    function startCandleCountdown() {
-      let timeLeft = 5;
-      const timer = setInterval(() => {
-        timeLeft--;
-        if (timeLeft > 0) {
-          timerLabel.textContent = `Extinguishing in ${timeLeft}s...`;
-        } else {
-          clearInterval(timer);
-          blowCandle();
-        }
-      }, 1000);
-    }
-
     function blowCandle() {
-      timerLabel.textContent = "Candle blown!";
       candleFlame.classList.add("out");
       smokeParticle.classList.add("rise");
 
@@ -993,10 +1003,10 @@
         launchConfettiBlast("right");
 
         // Secondary celebratory bursts for a full celebratory atmosphere
-        setTimeout(() => {
+        setInterval(() => {
           launchConfettiBlast("left", 35);
           launchConfettiBlast("right", 35);
-        }, 500);
+        }, 1500);
       }, 220);
     }
 
